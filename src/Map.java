@@ -31,10 +31,20 @@ public class Map {
             for (int x = 0; x < map.get(y).size(); x++) {
                 String item = getCoordinate(x,y);
                 if (Objects.equals(item, "0")) {
+                    int moveX = x;
+                    int moveY = raycastNorth(x, y);
 
+                    setCoordinate(x, y, ".");
+                    setCoordinate(moveX, moveY, "0");
                 }
             }
         }
+    }
+
+    public void setCoordinate(int x, int y, String item) {
+        ArrayList<String> tempLine = map.get(y);
+        tempLine.set(x, item);
+        map.set(y, map.get(y));
     }
 
     public int raycastNorth(int x, int y) {
