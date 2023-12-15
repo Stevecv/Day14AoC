@@ -15,10 +15,17 @@ public class Map {
         }
     }
 
+    public ArrayList<String> getLine(int y) {
+        return map.get(y);
+    }
+    public ArrayList<ArrayList<String>> getMap() {
+        return map;
+    }
+
     public String getReadableMap() {
         StringBuilder builder = new StringBuilder();
         for (ArrayList<String> line: map) {
-            builder.append(String.join("", line) + "\n");
+            builder.append(String.join("", line)).append("\n");
         }
         return builder.toString();
     }
@@ -30,12 +37,12 @@ public class Map {
         for (int y = 0; y < map.size(); y++) {
             for (int x = 0; x < map.get(y).size(); x++) {
                 String item = getCoordinate(x,y);
-                if (Objects.equals(item, "0")) {
+                if (Objects.equals(item, "O")) {
                     int moveX = x;
                     int moveY = raycastNorth(x, y);
 
                     setCoordinate(x, y, ".");
-                    setCoordinate(moveX, moveY, "0");
+                    setCoordinate(moveX, moveY, "O");
                 }
             }
         }
@@ -50,7 +57,6 @@ public class Map {
     public int raycastNorth(int x, int y) {
         int moveCount = 0;
         for (int i = y-1; i > -1; i--) {
-            System.out.println(" > " + getCoordinate(x, i));
             if (!Objects.equals(getCoordinate(x, i), ".")) {
                 return y-moveCount;
             }
