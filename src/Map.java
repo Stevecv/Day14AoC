@@ -47,6 +47,20 @@ public class Map {
             }
         }
     }
+    public void tiltSouth() {
+        for (int y = map.size()-1; y > 0; y--) {
+            for (int x = 0; x < map.get(y).size(); x++) {
+                String item = getCoordinate(x,y);
+                if (Objects.equals(item, "O")) {
+                    int moveX = x;
+                    int moveY = rayCastSouth(x, y);
+
+                    setCoordinate(x, y, ".");
+                    setCoordinate(moveX, moveY, "O");
+                }
+            }
+        }
+    }
 
     public void setCoordinate(int x, int y, String item) {
         ArrayList<String> tempLine = map.get(y);
@@ -58,6 +72,18 @@ public class Map {
         int moveCount = 0;
         for (int i = y-1; i > -1; i--) {
             if (!Objects.equals(getCoordinate(x, i), ".")) {
+                return y-moveCount;
+            }
+            moveCount++;
+        }
+        return y-moveCount;
+    }
+    public int rayCastSouth(int x, int y) {
+        int moveCount = 0;
+        for (int i = y-1; i > 0; i--) {
+            System.out.println(i);
+            if (!Objects.equals(getCoordinate(x, i), ".")) {
+                System.out.println("> " + getCoordinate(x, i) + " // " + moveCount);
                 return y-moveCount;
             }
             moveCount++;
