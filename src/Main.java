@@ -4,8 +4,9 @@ import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
-        Map map = new Map(PuzzleInput.testInput);
+        Map map = new Map(PuzzleInput.puzzleInput);
         int cycleCount = 1000000000;
+
         for (int i = 0; i < cycleCount; i++) {
             System.out.print(String.format("\r%s", progressBar(i, cycleCount)));
 
@@ -13,7 +14,6 @@ public class Main {
             map.tiltWest();
             map.tiltSouth();
             map.tiltEast();
-            //System.out.println(map.getReadableMap());
         }
         System.out.println(map.getReadableMap()); // Not necessary, just looks cool :)
         System.out.println(calculateTotalLoad(map));
@@ -40,6 +40,18 @@ public class Main {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    private String getReadableTime(Long nanos){
+
+        long tempSec    = nanos/(1000*1000*1000);
+        long sec        = tempSec % 60;
+        long min        = (tempSec /60) % 60;
+        long hour       = (tempSec /(60*60)) % 24;
+        long day        = (tempSec / (24*60*60)) % 24;
+
+        return String.format("%dd %dh %dm %ds", day,hour,min,sec);
+
     }
 
     public static int calculateTotalLoad(Map map) {
