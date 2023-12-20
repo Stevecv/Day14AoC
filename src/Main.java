@@ -4,8 +4,8 @@ import java.util.Objects;
 public class Main {
     public static void main(String[] args) {
         Map map = new Map(PuzzleInput.testInput);
-        System.out.println(map.rayCastSouth(9,6));
-        //map.tiltNorth();
+        //System.out.println(map.rayCastSouth(0,1));
+        map.tiltSouth();
         System.out.println(map.getReadableMap()); // Not necessary, just looks cool :)
 //
         //int totalLoad = 0;
