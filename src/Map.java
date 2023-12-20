@@ -57,7 +57,36 @@ public class Map {
                     int moveY = rayCastSouth(x, y);
 
                     setCoordinate(x, y, ".");
-                    System.out.println(">> " + moveY);
+                    setCoordinate(moveX, moveY, "O");
+                }
+            }
+        }
+    }
+
+    public void tiltEast() {
+        for (int y = 0; y < map.size(); y++) {
+            for (int x = map.get(y).size()-1; x > -1; x--) {
+                String item = getCoordinate(x,y);
+                if (Objects.equals(item, "O")) {
+                    int moveX = raycastEast(x, y);
+                    int moveY = y;
+
+                    setCoordinate(x, y, ".");
+                    setCoordinate(moveX, moveY, "O");
+                }
+            }
+        }
+    }
+
+    public void tiltWest() {
+        for (int y = 0; y < map.size(); y++) {
+            for (int x = 0; x < map.get(y).size(); x++) {
+                String item = getCoordinate(x,y);
+                if (Objects.equals(item, "O")) {
+                    int moveX = raycastWest(x, y);
+                    int moveY = y;
+
+                    setCoordinate(x, y, ".");
                     setCoordinate(moveX, moveY, "O");
                 }
             }
@@ -84,11 +113,32 @@ public class Map {
         int moveCount = 0;
         for (int i = y+1; i < map.size(); i++) {
             if (!Objects.equals(getCoordinate(x, i), ".")) {
-                System.out.println(y + "+" + moveCount);
                 return y+moveCount;
             }
             moveCount++;
         }
         return y+moveCount;
+    }
+
+    public int raycastWest(int x, int y) {
+        int moveCount = 0;
+        for (int i = x-1; i > -1; i--) {
+            if (!Objects.equals(getCoordinate(i, y), ".")) {
+                return x-moveCount;
+            }
+            moveCount++;
+        }
+        return x-moveCount;
+    }
+
+    public int raycastEast(int x, int y) {
+        int moveCount = 0;
+        for (int i = x+1; i < map.get(y).size(); i++) {
+            if (!Objects.equals(getCoordinate(i, y), ".")) {
+                return x+moveCount;
+            }
+            moveCount++;
+        }
+        return x+moveCount;
     }
 }
