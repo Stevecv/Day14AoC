@@ -3,14 +3,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
         Map map = new Map(PuzzleInput.testInput);
-        //System.out.println(map.raycastEast(0,0));
-        //map.tiltWest();
-
         int cycleCount = 1000000000;
-        int last = 0;
-        int totalLoad = 0;
         for (int i = 0; i < cycleCount; i++) {
             System.out.print(String.format("\r%s", progressBar(i, cycleCount)));
 
@@ -18,22 +13,14 @@ public class Main {
             map.tiltWest();
             map.tiltSouth();
             map.tiltEast();
-
-            totalLoad = calculateTotalLoad(map);
-            if (last == totalLoad) {
-                System.out.print("\nFinished early after " + i + " iterations\n");
-                break;
-            }
-            last = totalLoad;
+            //System.out.println(map.getReadableMap());
         }
         System.out.println(map.getReadableMap()); // Not necessary, just looks cool :)
-
-
-        System.out.println(totalLoad);
+        System.out.println(calculateTotalLoad(map));
     }
 
     public static String progressBar(int currentValue, int maxValue) {
-        int progressBarLength = 33; //
+        int progressBarLength = 201; //
         if (progressBarLength < 9 || progressBarLength % 2 == 0) {
             throw new ArithmeticException("formattedPercent.length() = 9! + even number of chars (one for each side)");
         }
