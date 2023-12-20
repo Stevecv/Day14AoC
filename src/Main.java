@@ -9,6 +9,8 @@ public class Main {
         //map.tiltWest();
 
         int cycleCount = 1000000000;
+        int last = 0;
+        int totalLoad = 0;
         for (int i = 0; i < cycleCount; i++) {
             System.out.print(String.format("\r%s", progressBar(i, cycleCount)));
 
@@ -16,22 +18,17 @@ public class Main {
             map.tiltWest();
             map.tiltSouth();
             map.tiltEast();
+
+            totalLoad = calculateTotalLoad(map);
+            if (last == totalLoad) {
+                System.out.print("\nFinished early after " + i + " iterations\n");
+                break;
+            }
+            last = totalLoad;
         }
         System.out.println(map.getReadableMap()); // Not necessary, just looks cool :)
 
-        int totalLoad = 0;
-        for (int y = 0; y < map.getMap().size(); y++) {
-            int rockCount = 0;
-            int rockWeight = map.getMap().size()-y;
-            for (String item: map.getLine(y)) {
-                if (item == "O") {
-                    rockCount++;
-                }
-            }
 
-            int lineWeight = rockWeight*rockCount;
-            totalLoad += lineWeight;
-        }
         System.out.println(totalLoad);
     }
 
@@ -56,5 +53,22 @@ public class Main {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    public static int calculateTotalLoad(Map map) {
+        int totalLoad = 0;
+        for (int y = 0; y < map.getMap().size(); y++) {
+            int rockCount = 0;
+            int rockWeight = map.getMap().size()-y;
+            for (String item: map.getLine(y)) {
+                if (item == "O") {
+                    rockCount++;
+                }
+            }
+
+            int lineWeight = rockWeight*rockCount;
+            totalLoad += lineWeight;
+        }
+        return totalLoad;
     }
 }
